@@ -14,7 +14,7 @@ from the (still in development) FlyingProgram's ecosystem.
 ## Connection
 
 ```js
-const civicrm = require( "flying-civi" );
+const flyingCivi = require( "flying-civi" );
 
 const config = {
   server: "http://127.0.0.1:8080",
@@ -23,24 +23,11 @@ const config = {
   api_key: "api_key"
 }
 
-const api = civicrm.execute( config );
+const civi = flyingCivi.config( config );
 ```
 
 ## Example of use
 
 ```js
-async function example() {
-  let groups = await api.get.executeAsync( "customGroup", {
-    extends: "Contact",
-    is_multiple: false,
-    options: { limit: 0 }
-  });
-
-  return await api.get.executeAsync( "customField", {
-    custom_group_id: groups.values.map( g => g.name ),
-    options: { limit: 0 }
-  });
-}
-
-example().then( r => console.log( r.values ) ).catch( console.error );
+civi.get( "Contact", { is_deleted: false } ).then( console.log );
 ```

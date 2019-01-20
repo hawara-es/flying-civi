@@ -1,4 +1,4 @@
-const rejectOrResolve = function( resolve, reject ) {
+const solver = function( resolve, reject ) {
   return function( result ) {
     if( result.is_error )
       reject( result.error_message );
@@ -7,4 +7,4 @@ const rejectOrResolve = function( resolve, reject ) {
   }
 }
 
-module.exports = rejectOrResolve;
+module.exports = solver;
