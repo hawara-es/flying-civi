@@ -4,6 +4,10 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hawara-es/flying-civi"
+  },
   "dependencies": {
     "flying-program": "git+https://github.com/hawara-es/flying-program.git#a7bd8df3afdc34f8f775d7888aa09ffc3449e686",
     "civicrm": "^2.2.2"
