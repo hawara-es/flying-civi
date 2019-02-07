@@ -8,7 +8,8 @@ Before you keep reading, you must know that this project is still in a
 The internal structure of this project is meant to change. Also, documentation
 and tests are very incomplete. You've been warned!
 
-`FlyingCivi` is a wrapper that makes the Node.js [civicrm](https://github.com/TechToThePeople/node-civicrm) module available
+`FlyingCivi` is a wrapper that makes the Node.js
+[civicrm](https://github.com/TechToThePeople/node-civicrm) module available
 from the (still in development) FlyingProgram's ecosystem.
 
 ## Connection
