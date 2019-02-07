@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "scripts": {},
   "dependencies": {
-    "civicrm": "^2.2.2",
-    "flying-program": "../flying-program"
-  }
+    "flying-program": "git+https://github.com/hawara-es/flying-program.git#a7bd8df3afdc34f8f775d7888aa09ffc3449e686",
+    "civicrm": "^2.2.2"
+  },
+  "author": "Carlos Capote <carlos.capote@hawara.es>",
+  "license": "GPL-3.0-or-later"
 }
