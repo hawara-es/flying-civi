@@ -6,7 +6,8 @@ const template = {
   server: "string",
   path: "string",
   key: "string",
-  api_key: "string"
+  api_key: "string",
+  debug: "boolean?"
 }
 
 const validate = restruct( template );
