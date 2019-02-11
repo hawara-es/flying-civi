@@ -9,8 +9,8 @@ const prepareGetter = function( api ) {
     async: true,
     declarations: {
       get: {
-        input: [ "string", "object" ],
-        function: async function( entity, params ) {
+        input: [ "string", "object|undefined" ],
+        function: async function( entity, params = {} ) {
           return await new Promise( ( resolve, reject ) => {
             api.get( entity, params, solver( resolve, reject ) );
           });
@@ -27,29 +27,8 @@ let configGetter = {
     "a program that uses the connection to perform `get` calls.",
   declarations: {
     prepare: { function: prepareGetter },
-    initialize: {
-      function: function( getter ) {
-        return {
-          program: new FlyingProgram( getter ),
-          source: copy( getter )
-        }
-      }
-    },
-    export: {
-      function: function( getter ) {
-        return {
-          get: getter.program.executeAsync.bind( getter.program ),
-          source: getter.source
-        }
-      }
-    }
+    initialize: { function: getter => FlyingProgram( getter ) }
   }
 }
 
-const source = copy( configGetter );
-configGetter = new FlyingProgram( configGetter );
-
-module.exports = {
-  config: configGetter.execute.bind( configGetter ),
-  source: source
-}
+module.exports = FlyingProgram( configGetter );

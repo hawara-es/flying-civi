@@ -1,11 +1,8 @@
 const FlyingProgram = require( "flying-program" ).Program;
-const copy = require( "flying-program" ).copies.unfiltered;
-
 const civicrm = require( "civicrm" );
+const validate = require( "./utils/validate" );
 
-const validator = require( "./utils/validator" );
-
-const operators = {
+const prepare = {
   getter: require( "./operators/getter" ),
   creator: require( "./operators/creator" ),
   updater: require( "./operators/updater" ),
@@ -20,33 +17,19 @@ let civicrmAPI = {
     config: {
       input: [ "object" ],
       function: function( config ) {
-        validator.validate( config );
-
+        validate( config );
         const api = civicrm( config );
 
-        const configured = {
-          getter: operators.getter.config( api ),
-          creator: operators.creator.config( api ),
-          updater: operators.updater.config( api ),
-          deleter: operators.deleter.config( api ),
-          caller: operators.caller.config( api )
-        }
         return {
-          get: configured.getter.get,
-          create: configured.creator.create,
-          update: configured.updater.update,
-          delete: configured.deleter.delete,
-          call: configured.caller.call
+          get: prepare.getter( api ),
+          create: prepare.creator( api ),
+          update: prepare.updater( api ),
+          delete: prepare.deleter( api ),
+          call: prepare.caller( api )
         }
       }
     }
   }
 }
 
-const source = copy( civicrmAPI );
-civicrmAPI = new FlyingProgram( civicrmAPI );
-
-module.exports = {
-  config: civicrmAPI.execute.bind( civicrmAPI ),
-  source: source
-}
+module.exports = FlyingProgram( civicrmAPI );

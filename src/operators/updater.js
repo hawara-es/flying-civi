@@ -9,8 +9,8 @@ const prepareUpdater = function( api ) {
     async: true,
     declarations: {
       update: {
-        input: [ "string", "object" ],
-        function: async function( entity, params ) {
+        input: [ "string", "object|undefined" ],
+        function: async function( entity, params = {} ) {
           return await new Promise( ( resolve, reject ) => {
             api.update( entity, params, solver( resolve, reject ) );
           });
@@ -27,29 +27,8 @@ let configUpdater = {
     "a program that uses the connection to perform `update` calls.",
   declarations: {
     prepare: { function: prepareUpdater },
-    initialize: {
-      function: function( updater ) {
-        return {
-          program: new FlyingProgram( updater ),
-          source: copy( updater )
-        }
-      }
-    },
-    export: {
-      function: function( updater ) {
-        return {
-          update: updater.program.executeAsync.bind( updater.program ),
-          source: updater.source
-        }
-      }
-    }
+    initialize: { function: updater => FlyingProgram( updater ) }
   }
 }
 
-const source = copy( configUpdater );
-configUpdater = new FlyingProgram( configUpdater );
-
-module.exports = {
-  config: configUpdater.execute.bind( configUpdater ),
-  source: source
-}
+module.exports = FlyingProgram( configUpdater );

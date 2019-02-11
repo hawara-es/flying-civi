@@ -1,6 +1,5 @@
 const FlyingProgram = require( "flying-program" ).Program;
 const restruct = require( "flying-program" ).restruct;
-const copy = require( "flying-program" ).copies.unfiltered;
 
 const template = {
   server: "string",
@@ -10,16 +9,14 @@ const template = {
   debug: "boolean?"
 }
 
-const validate = restruct( template );
-
-let validator = {
+let validate = {
   description: "Return true if the `input` looks like a valid configuration " +
     "for a `node-civicrm` connection. If it is doesn't look valid, throw " +
     "a string with the reason.",
   declarations: {
     validate: {
       function: function( input ) {
-        return validate( input );
+        return restruct( template )( input );
       }
     }
   },
@@ -33,10 +30,4 @@ let validator = {
   }
 }
 
-const source = copy( validator );
-validator = new FlyingProgram( validator );
-
-module.exports = {
-  validate: validator.execute.bind( validator ),
-  source: source
-}
+module.exports = FlyingProgram( validate );

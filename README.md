@@ -15,7 +15,7 @@ from the (still in development) FlyingProgram's ecosystem.
 ## Connection
 
 ```js
-const flyingCivi = require( "flying-civi" );
+const connect = require( "flying-civi" );
 
 const config = {
   server: "http://127.0.0.1:8080",
@@ -24,7 +24,7 @@ const config = {
   api_key: "api_key"
 }
 
-const civi = flyingCivi.config( config );
+const civi = connect( config );
 ```
 
 ## Example of use

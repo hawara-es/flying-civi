@@ -1,5 +1,4 @@
 const FlyingProgram = require( "flying-program" ).Program;
-const copy = require( "flying-program" ).copies.unfiltered;
 
 const solver = require( "../utils/solver" );
 
@@ -9,8 +8,8 @@ const prepareCaller = function( api ) {
     async: true,
     declarations: {
       call: {
-        input: [ "string", "string", "object" ],
-        function: async function( entity, action, params ) {
+        input: [ "string", "string", "object|undefined" ],
+        function: async function( entity, action, params = {} ) {
           return await new Promise( ( resolve, reject ) => {
             api.call( entity, action, params, solver( resolve, reject ) );
           });
@@ -27,29 +26,8 @@ let configCaller = {
     "a program that uses the connection to perform `action` calls.",
   declarations: {
     prepare: { function: prepareCaller },
-    initialize: {
-      function: function( caller ) {
-        return {
-          program: new FlyingProgram( caller ),
-          source: copy( caller )
-        }
-      }
-    },
-    export: {
-      function: function( caller ) {
-        return {
-          call: caller.program.executeAsync.bind( caller.program ),
-          source: caller.source
-        }
-      }
-    }
+    initialize: { function: caller => FlyingProgram( caller ) }
   }
 }
 
-const source = copy( configCaller );
-configCaller = new FlyingProgram( configCaller );
-
-module.exports = {
-  config: configCaller.execute.bind( configCaller ),
-  source: source
-}
+module.exports = FlyingProgram( configCaller );
