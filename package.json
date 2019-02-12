@@ -9,7 +9,7 @@
     "url": "https://github.com/hawara-es/flying-civi"
   },
   "dependencies": {
-    "flying-program": "git+https://github.com/hawara-es/flying-program.git#91097b23bfad1706c0860ae8d5119007f1732672",
+    "flying-program": "git+https://github.com/hawara-es/flying-program.git#7a70f75c",
     "civicrm": "^2.2.2"
   },
   "author": "Carlos Capote <carlos.capote@hawara.es>",
